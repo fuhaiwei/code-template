@@ -1,6 +1,9 @@
-/var
-/conf/secret.properties
+### Project ###
+*.log
+/var/
+/etc/app.properties
 
+### Spring Boot ###
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
