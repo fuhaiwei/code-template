@@ -2,14 +2,19 @@
 
 # 环境准备
 DirName=$(dirname "$0")
-HomeDir=$(realpath "$DirName"/..)
-ExecMvn="bash ./mvnw"
-cd "$HomeDir" || exit
+AppHome=$(realpath "$DirName"/..)
 
-# 版本发布
-git flow release start "$1"
-$ExecMvn versions:set -DnewVersion="$1"
-$ExecMvn versions:commit
+# 准备发布新版本
+cd "$AppHome" || exit
+git flow release start "v$1"
+
+# 更新 pom.xml 版本号
+mvn versions:set -DnewVersion="$1"
+mvn versions:commit
+
+# 提交 pom.xml 版本号
 git add .
-git commit -m "Set version to $1"
-git flow release finish "$1"
+git commit -m "chore: set version to v$1"
+
+# 发布新版本
+git flow release finish "v$1"
